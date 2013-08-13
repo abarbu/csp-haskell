@@ -1,0 +1,22 @@
+Name:                csp
+Version:             1.0
+Description:         Constraint satisfaction problem (CSP) solvers
+License:             LGPL
+Author:              Andrei Barbu <andrei@0xab.com>
+category:            Control
+Build-Type:          Simple
+Cabal-Version:       >=1.2
+description:
+    CSP (constraint satisfaction problem) solvers implemented on top
+    of nondeterminism. These support various constraint porpagation
+    techniques like arc consistency.
+
+source-repository head
+  type: git
+  location: git://github.com/abarbu/csp-haskell.git
+
+Library
+  Build-Depends:     base >= 3 && < 5, mtl >= 2, containers, nondeterminism
+  Exposed-modules:
+                     Control.Monad.CSP
+  ghc-options:       -Wall
