@@ -1,5 +1,7 @@
 # CSP
 
+This package is now available via Hackage, and is primarily documented there.
+
 A simple example which solves Sudoku puzzles, project Euler problem 96.
 
     solveSudoku :: (Enum a, Eq a, Num a) => [[a]] -> [[a]]
