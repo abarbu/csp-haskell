@@ -148,7 +148,7 @@ localWriteIORef ref new = do
 restrictDomain :: DV r a -> ([a] -> IO [a]) -> AmbT r IO ()
 restrictDomain dv f = do
   l' <- lift (domain dv >>= f)
-  when (null l') fail'
+  when (null l') empty
   size <- lift $ domainSize dv
   when (length l' < size) $ do
     localWriteIORef (dvDomain dv) l'
