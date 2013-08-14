@@ -3,7 +3,7 @@
 A simple example which solves Sudoku puzzles, project Euler problem 96.
 
     solveSudoku :: (Enum a, Eq a, Num a) => [[a]] -> [[a]]
-    solveSudoku puzzle = solveCSP $ do
+    solveSudoku puzzle = oneCSPSolution $ do
       dvs <- mapM (mapM (\a -> mkDV $ if a == 0 then [1 .. 9] else [a])) puzzle
       mapM_ assertRowConstraints dvs
       mapM_ assertRowConstraints $ transpose dvs

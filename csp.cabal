@@ -2,14 +2,15 @@ Name:                csp
 Version:             1.0
 Description:         Constraint satisfaction problem (CSP) solvers
 License:             LGPL
+License-file:        LICENSE
 Author:              Andrei Barbu <andrei@0xab.com>
-category:            Control
+Maintainer:          Andrei Barbu <andrei@0xab.com>
+Category:            Control, AI, Constraints, Failure, Monads
 Build-Type:          Simple
-Cabal-Version:       >=1.2
+cabal-version:       >= 1.6
 description:
-    CSP (constraint satisfaction problem) solvers implemented on top
-    of nondeterminism. These support various constraint porpagation
-    techniques like arc consistency.
+    Discrete constraint satisfaction problem (CSP) solvers.
+extra-source-files:  README.md
 
 source-repository head
   type: git
