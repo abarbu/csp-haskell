@@ -1,5 +1,7 @@
 # CSP
 
+[![Build Status](http://circleci-badges-max.herokuapp.com/img/abarbu/csp-haskell/master?token=91512eefc213cc37bd2c8d8e418debab8cb3efec)](https://circleci.com/gh/abarbu/csp-haskell/tree/master)
+
 This package is available via
 [Hackage where its documentation resides](https://hackage.haskell.org/package/csp). It
 provides a solver for constraint satisfaction problems by implementing
