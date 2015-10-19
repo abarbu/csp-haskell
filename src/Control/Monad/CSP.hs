@@ -200,7 +200,7 @@ constraint f dvl =
                                                    let loop []     es _ = f (reverse es)
                                                        loop (d:ds) es j | i == j = loop ds (d2e:es) (j + 1)
                                                                         | otherwise = any (\e -> loop ds (e : es) (j + 1)) d
-                                                   in loop ddvl [] 0) d2))
+                                                   in loop ddvl [] 1) d2))
                  $ zip dvl ([1..] :: [Int])))
       $ zip dvl ([1..] :: [Int])
 
