@@ -99,6 +99,13 @@ data CSP r x = CSP { unCSP :: IORef [DVContainer r] -> IO x }
 csp :: IO x -> CSP r x
 csp x = CSP (\_ -> x)
 
+instance Functor (CSP r) where
+    fmap = liftM
+ 
+instance Applicative (CSP r) where
+    pure  = return
+    (<*>) = ap
+
 instance Monad (CSP r) where
     CSP x >>= y = CSP (\s -> x s >>= (\(CSP z) -> z s) . y)
     return a = CSP (\_ -> return a)
