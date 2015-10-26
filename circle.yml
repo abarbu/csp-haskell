@@ -1,3 +1,0 @@
-test:
-  post:
-    - cabal haddock --builddir=$CIRCLE_ARTIFACTS
