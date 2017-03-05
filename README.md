@@ -45,7 +45,6 @@ solveSudoku sudoku3
     
 ## Future
 
- - Docs!
  - Allow a randomized execution order for CSPs
  - CSPs don't need to use IO internally. ST is enough.
  - Constraint synthesis. Already facilitated by the fact that
