@@ -19,7 +19,9 @@ unitTests = testGroup "Unit tests"
   , testCase "constraint2 same type" $
     oneCSPSolution testC1 @?= (5,4)
   , testCase "constraint2 different types" $
-    oneCSPSolution testC2 @?= ("2",2)
+    oneCSPSolution testC2 @?= ("2",2::Int)
+  , testCase "constraint3 different types" $
+    oneCSPSolution testC3 @?= ("2",2::Int,2)
   , testCase "sudoku1" $
     solveSudoku sudoku1 @?= [[4,8,3,9,2,1,6,5,7],[9,6,7,3,4,5,8,2,1],[2,5,1,8,7,6,4,9,3],[5,4,8,1,3,2,9,7,6],[7,2,9,5,6,4,1,3,8],[1,3,6,7,9,8,2,4,5],[3,7,2,6,8,9,5,1,4],[8,1,4,2,5,3,7,6,9],[6,9,5,4,1,7,3,8,2]]
   , testCase "sudoku3" $
@@ -47,6 +49,13 @@ testC2 = do
   b <- mkDV [3,2,7]
   constraint2 (\a b -> read a == b) a b
   return (a,b)
+
+testC3 = do
+  a <- mkDV ["1","2","3"]
+  b <- mkDV [2::Int,3,4]
+  c <- mkDV [2.0::Double,4,5]
+  constraint3 (\a b c -> read a == b && read a == c) a b c
+  return (a,b,c)
 
 -- Project Euler problem 96
 

@@ -9,6 +9,7 @@ module Control.Monad.CSP
          mkDV,
          constraint1,
          constraint2,
+         constraint3,
          constraint,
          -- * Solving CSPs
          oneCSPSolution,
@@ -184,6 +185,46 @@ constraint2 f x y = do
           yd <- (domain y)
           return $ filter (\xe -> any (\ye -> f xe ye) yd) xd)
 
+-- | Assert a trinary constraint with arc consistency.
+constraint3 :: (a -> t1 -> t2 -> Bool) -> DV t a -> DV t t1 -> DV t t2 -> CSP r ()
+constraint3 f x y z = do
+  addConstraint x $
+    restrictDomain y
+      (\yd -> do
+          xd <- (domain x)
+          zd <- (domain z)
+          return $ filter (\ye -> any (\xe -> any (\ze -> f xe ye ze) zd) xd) yd)
+  addConstraint x $
+    restrictDomain z
+      (\zd -> do
+          xd <- (domain x)
+          yd <- (domain y)
+          return $ filter (\ze -> any (\xe -> any (\ye -> f xe ye ze) yd) xd) zd)
+  addConstraint y $
+    restrictDomain x
+      (\xd -> do
+          yd <- (domain y)
+          zd <- (domain z)
+          return $ filter (\xe -> any (\ye -> any (\ze -> f xe ye ze) zd) yd) xd)
+  addConstraint y $
+    restrictDomain z
+      (\zd -> do
+          yd <- (domain y)
+          xd <- (domain x)
+          return $ filter (\ze -> any (\ye -> any (\xe -> f xe ye ze) xd) yd) zd)
+  addConstraint z $
+    restrictDomain x
+      (\xd -> do
+          yd <- (domain y)
+          zd <- (domain z)
+          return $ filter (\xe -> any (\ze -> any (\ye -> f xe ye ze) yd) zd) xd)
+  addConstraint z $
+    restrictDomain y
+      (\yd -> do
+          xd <- (domain x)
+          zd <- (domain z)
+          return $ filter (\ye -> any (\ze -> any (\xe -> f xe ye ze) xd) zd) yd)
+
 -- | Assert an n-ary constraint with arc consistency. One day this
 -- will allow for a heterogeneous list of variables, but at the moment
 -- they must all be of the same type.
@@ -221,6 +262,40 @@ instance (CSPResult a, CSPResult b) => CSPResult (a,b) where
       a' <- result a
       b' <- result b
       return (a', b')
+instance (CSPResult a, CSPResult b, CSPResult c) => CSPResult (a,b,c) where
+    type Result (a,b,c) = (Result a, Result b, Result c)
+    result (a,b,c) = do
+      a' <- result a
+      b' <- result b
+      c' <- result c
+      return (a', b', c')
+instance (CSPResult a, CSPResult b, CSPResult c, CSPResult d) => CSPResult (a,b,c,d) where
+    type Result (a,b,c,d) = (Result a, Result b, Result c, Result d)
+    result (a,b,c,d) = do
+      a' <- result a
+      b' <- result b
+      c' <- result c
+      d' <- result d
+      return (a', b', c', d')
+instance (CSPResult a, CSPResult b, CSPResult c, CSPResult d, CSPResult e) => CSPResult (a,b,c,d,e) where
+    type Result (a,b,c,d,e) = (Result a, Result b, Result c, Result d, Result e)
+    result (a,b,c,d,e) = do
+      a' <- result a
+      b' <- result b
+      c' <- result c
+      d' <- result d
+      e' <- result e
+      return (a', b', c', d', e')
+instance (CSPResult a, CSPResult b, CSPResult c, CSPResult d, CSPResult e, CSPResult f) => CSPResult (a,b,c,d,e,f) where
+    type Result (a,b,c,d,e,f) = (Result a, Result b, Result c, Result d, Result e, Result f)
+    result (a,b,c,d,e,f) = do
+      a' <- result a
+      b' <- result b
+      c' <- result c
+      d' <- result d
+      e' <- result e
+      f' <- result f
+      return (a', b', c', d', e', f')
 instance (CSPResult a) => CSPResult [a] where
     type Result [a] = [Result a]
     result = mapM result
